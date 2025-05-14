@@ -84,6 +84,34 @@ h2{
 	font-size: 30px;
 	color: #1D6154
 }
+
+div#filters {
+    display: flex;
+    justify-content: center;
+}
+.filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 42px;
+	width: 69%;
+}
+button.filter-btn {
+    border-radius: 60px;
+	border: 1px solid #1D6154;
+    width: 24%;
+    height: 44px;
+	background: white;
+	color: #1D6154;
+	font-size: 16px;
+	font-weight: bold;
+}
+button.filter-btn:hover {
+	background-color: #1D6154; 
+	color: white;
+	cursor: pointer; 
+  }
+  
+
 nav ul {
 	display: flex;
 	align-items: center;
@@ -93,6 +121,10 @@ nav ul {
 nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
+}
+nav a {
+    text-decoration: none;
+    color: inherit;
 }
 
 li:hover {
@@ -119,12 +151,14 @@ li:hover {
 }
 
 #introduction p {
-	margin-bottom: 0.5em;
+	margin-bottom: 1.5em;
 }
 #portfolio h2 {
 	text-align: center;
 	margin-bottom: 1em;
 }
+
+
 .gallery {
 	width: 100%;
 	display: grid;
@@ -186,3 +220,369 @@ footer nav ul {
 	margin: 2em
 }
 
+#login-section {
+	width: 35%;
+	margin: auto;
+	margin-top: 130px;
+	margin-bottom: 200px;
+  }
+  
+  #login-section > * {
+	text-align: center;
+  }
+  
+  #login-section h2 {
+	margin-bottom: 20px;
+  }
+  
+  #login-section form {
+	text-align: left;
+	margin-top: 30px;
+	display: flex;
+	flex-direction: column;
+  }
+  
+  #login-section input {
+	height: 50px;
+	font-size: 1.2em;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+  }
+  
+  #login-section label {
+	margin: 2em 0 1em 0;
+  }
+  
+  #login-section textarea {
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+  }
+  
+  input[type="submit"] {
+	font-family: 'Syne';
+	font-weight: 700;
+	color: white;
+	background-color: #1D6154;
+	margin: 2em auto;
+	width: 180px;
+	text-align: center;
+	border-radius: 60px;
+  }
+
+  p a {
+	color: inherit;
+  }
+  
+  p a:hover {
+	color: #1D6154;
+  }
+  
+  li.footer-legal {
+    font-family: 'Work Sans';
+    font-size: 14px;
+}
+.portfolio-header {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 15px;
+	margin-bottom: 1em;
+  }
+  
+#modifier-link {
+	background: none;
+	border: none;
+	color:#000000;
+	font-family:Work Sans;
+	font-size: 14px;
+	margin-left: 10px;
+	display: inline-flex;
+	gap: 5px;
+	margin-bottom: 24px;
+  }
+  
+  #modifier-link:hover {
+	color: #B1663C;
+	text-decoration: underline;
+  }
+  
+  .hidden {
+	display: none;
+  }
+
+  /* نافذة منبثقة - خلفية */
+  #modale {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,0.7);
+	justify-content: center;
+	align-items: center;
+	z-index: 1000;
+	
+  }
+  
+  #modale.show-modale {
+	display: flex;
+  }
+  
+  .modale-content {
+	background: white;
+	padding: 30px;
+	border-radius: 10px;
+    width: 52%;
+    height: 688px;
+	overflow-y: auto; /* سكرول إذا المحتوى أكبر */
+	position: relative;
+	border-radius: 10px;
+  }
+  .modale-content h3 {
+	text-align: center; /* توسيط النص */
+	margin-top: 20px;   /* مسافة من الأعلى */
+	margin-bottom: 20px; /* مسافة من الأسفل */
+	font-size: 26px;    /* حجم الخط */
+	font-family: 'Work Sans', sans-serif; /* نوع الخط */
+  }
+  
+  .close-button {
+	position: absolute;
+	top: 10px;
+	right: 15px;
+	font-size: 30px;
+	cursor: pointer;
+  }
+  
+  .modale-gallery {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
+	gap: 15px;
+	margin-top: 20px;
+  }
+  
+  .modale-gallery img {
+	width: 65%;
+	height: auto;
+	border-radius: 8px;
+	object-fit: cover;
+  }
+  
+  .add-photo-section {
+	margin-top: 40px;
+	padding-top: 20px;
+	border-top: 1px solid #ccc;
+  }
+  .add-photo-section {
+    display: flex;
+    justify-content: center;
+}
+#open-upload-form {
+    display: flex;
+    justify-content: center;
+    width: 46%;
+	height: 44px;
+    align-items: center;
+	border-radius: 60px;
+	border: 1px solid;
+	background-color: #1D6154;
+	font-family:syne ;
+color:#ffff;
+font-size: 14px;
+}
+
+
+.modale-image-container {
+	position: relative;
+	display: inline-block;
+	margin: 10px;
+  }
+  
+  .delete-button {
+	position: absolute;
+	top: 2px;
+	right: 39px;
+	background: none;
+	border: solid 1px;
+	font-size: 11px;
+	cursor: pointer;
+	color: #000000;
+	background-color: black;
+	height: 22px;
+	width: 24px;
+	}
+  
+
+
+	/* العنوان في الأعلى */
+#upload-view .modale-title {
+	text-align: center;
+	font-size: 26px;
+	font-family: 'Work Sans', sans-serif;
+	margin-top: 20px;
+	margin-bottom: 20px;
+  }
+  
+  /* منطقة اختيار الصورة */
+  .image-upload-zone {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 170px;
+	background-color: #E8F1F6;
+	border-radius: 5px;
+	margin: 20px auto;
+	width: 80%;
+  }
+  
+  .image-upload-label {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	cursor: pointer;
+	color: #B9C5CC;
+	font-family: 'Work Sans', sans-serif;
+	font-size: 14px;
+  }
+  
+  .image-upload-label i {
+	font-size: 45px;
+	margin-bottom: 10px;
+  }
+  
+  /* حقول النموذج */
+  #upload-view .form-group {
+	display: flex;
+	flex-direction: column;
+	margin: 20px auto;
+	width: 80%;
+	font-family: 'Work Sans', sans-serif;
+  }
+  
+  #upload-view input,
+  #upload-view select {
+	padding: 10px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	margin-top: 5px;
+  }
+  
+  /* الخط الفاصل */
+  .separator-line {
+	border: none;
+	border-top: 1px solid #ccc;
+	margin: 30px auto 20px;
+	width: 80%;
+  }
+  
+  /* زر التحقق */
+  .validate-button {
+	display: block;
+	margin: 0 auto;
+	padding: 10px 30px;
+	background-color: #1D6154;
+	color: white;
+	border: none;
+	border-radius: 60px;
+	font-family: 'Syne', sans-serif;
+	font-size: 14px;
+	cursor: pointer;
+  }
+  .image-upload-placeholder {
+	border: 2px dashed #ccc;
+	background-color:#E8F1F6;
+
+	height: 200px;
+	width: 100%;
+	border-radius: 10px;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 20px;
+	cursor: pointer;
+  }
+
+  image-upload-placeholder i {
+	font-size: 48px;
+	color: #999;
+	margin-bottom: 10px;
+  }
+  .add-photo-button {
+	background: #CBD6DC;
+	color : #306685;
+	font-size: 16px;
+	font-family: 'Work Sans', sans-serif;
+	padding: 12px 24px;
+	border: none;
+	border-radius: 25px;
+	cursor: pointer;
+	text-align: center;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+	transition: background-color 0.3s ease;
+	margin-top: 10px;
+  }
+  i.fa-regular.fa-image {
+    font-size: 50px;
+    color: #B9C5CC;
+
+}
+
+div#submit-photo{
+	display: flex;
+	justify-content: center;
+	margin-top: 35px;
+	
+}
+
+#submit-photo button{
+	display: flex;
+    justify-content: center;
+    width: 46%;
+	height: 44px;
+    align-items: center;
+	border-radius: 60px;
+	border: 1px solid;
+	background-color: #1D6154;
+	font-family:syne ;
+color:#ffff;
+font-size: 14px
+}
+
+section#introduction {
+    margin-bottom: 100px;
+}
+
+input#image {
+	background: #CBD6DC;
+	color : #306685;
+	font-size: 16px;
+	font-family: 'Work Sans', sans-serif;
+	padding: 12px 24px;
+	border: none;
+	border-radius: 25px;
+	cursor: pointer;
+	text-align: center;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+	transition: background-color 0.3s ease;
+	margin-top: 10px;
+}
+
+
+.preview-image {
+	width:12%;
+	object-fit: cover;
+	border-radius: 5px;
+	margin-bottom: 1px;
+  }
+  a#show-gallery {
+    display: flex;
+    justify-content: left;
+    text-decoration: none;
+    color: black;
+    font-size: 18px;
+    position: relative;
+    bottom: 77px;
+}

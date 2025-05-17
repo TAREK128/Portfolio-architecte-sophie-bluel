@@ -335,12 +335,15 @@ footer nav ul {
 	padding: 30px;
 	border-radius: 10px;
     width: 40%;
-    height: 688px;
-	overflow-y: auto; /* سكرول إذا المحتوى أكبر */
-	position: fixed;
+    height: 586px;
+	
+	position: relative;
 	border-radius: 10px;
 	
   }
+  div#gallery-view {
+    padding: 25px;
+}
   .modale-content h3 {
 	text-align: center; /* توسيط النص */
 	margin-top: 20px;   /* مسافة من الأعلى */
@@ -359,9 +362,9 @@ footer nav ul {
   
   .modale-gallery {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-	gap: 15px;
-	margin-top: 20px;
+	grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
+	gap: 5px;
+	margin-top:45px;
   }
   
   .modale-gallery img {
@@ -397,7 +400,8 @@ font-size: 14px;
 .modale-image-container {
 	position: relative;
 	display: inline-block;
-	margin: 10px;
+	margin: 3px;
+	margin-bottom: 19px;
   }
   
   .delete-button {

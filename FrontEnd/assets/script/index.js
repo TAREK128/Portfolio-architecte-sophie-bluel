@@ -1,109 +1,85 @@
 const gallery = document.querySelector(".gallery");
+let allWorks = [];
 
-async function getwork() {
-    const data = await getworks();
-    console.log(data)
-// crée les éléments HTML
-    data.forEach(work => {
-        const figure = document.createElement("figure");
-    const img = document.createElement("img");
-    const caption = document.createElement("figcaption");
-    
-    img.src = work.imageUrl;
-    img.alt = work.title;
-    caption.innerText = work.title;
-    
-    figure.appendChild(img);
-    figure.appendChild(caption);
-    gallery.appendChild(figure);
-    
-    });
-}
-// Appel de la fonction pour charger les travaux
-getwork();
- // Nettoyer la galerie avant d'ajouter les éléments
-gallery.innerHTML = "";
-
-// crée menu  (Catégories) 
-async function getCat() {
-    const categories =  await getCategories();
-  
-    // إنشاء div للفلاتر
-    const filtersDiv = document.createElement("div");
-    filtersDiv.classList.add("filters");
-  
-    // زر "Tous" لعرض كل الأعمال
-    const allBtn = document.createElement("button");
-    allBtn.textContent = "Tous";
-    allBtn.classList.add("filter-btn");
-    filtersDiv.appendChild(allBtn);
-  //هذا يعيد اضافة كامل الصفحة عند الضغط على tous
-    allBtn.addEventListener("click", showAllWorks);
-
-    // إضافة أزرار لكل فئة
-    categories.forEach(category => {
-      const categoryBtn = document.createElement("button");
-      categoryBtn.textContent = category.name;
-      categoryBtn.classList.add("filter-btn");
-      filtersDiv.appendChild(categoryBtn);
-  
-      // يتم تشغيل دالة filterWorksByCategory لعرض المشاريع التي تنتمي لتلك الفئة 
-      categoryBtn.addEventListener("click", function () {
-        console.log("فئة مختارة:", category.name);
-        filterWorksByCategory(category.id);
-      });
-    });
-  
-    // إضافة الفلاتر إلى main
-    document.querySelector("#filters").appendChild(filtersDiv);
-  }
-  
-  // تشغيل الدالة
-  getCat();
-  
-
-//تصنيف الفلاتر 
-
- // الحصول على الاعمال من api
-  function filterWorksByCategory(categoryId) {
-    getworks().then(works => {
-      
-      //فلتر الأعمال بناءً على الفئة المطلوبة
-      let filteredWorks = [];
-
-for (let i = 0; i < works.length; i++) {
-  if (works[i].categoryId === categoryId) {
-    filteredWorks.push(works[i]);
-  }
+// 1. جلب الأعمال
+async function getworks() {
+    try {
+        const response = await fetch("http://localhost:5678/api/works");
+        return await response.json();
+    } catch (error) {
+        console.error("Erreur lors de la récupération :", error);
+        return [];
+    }
 }
 
-  
-      // تنظيف الصفحة قبل العرض
-      gallery.innerHTML = "";
-  
-      // انشاء عناصر html للعنصر المطلوب
-      filteredWorks.forEach(work => {
+// 2. عرض الأعمال في المعرض
+function showWorks(works) {
+    gallery.innerHTML = "";
+
+    works.forEach(work => {
         const figure = document.createElement("figure");
         const img = document.createElement("img");
         const caption = document.createElement("figcaption");
-  
+
         img.src = work.imageUrl;
         img.alt = work.title;
         caption.innerText = work.title;
-  
+
         figure.appendChild(img);
         figure.appendChild(caption);
         gallery.appendChild(figure);
-      });
-  
     });
-  }
-  
-  //الان عند الضغط على زر Tous
-  function showAllWorks() {
-    getwork(); 
-  }
-  
+}
+
+// 3. عرض الكل
+function showAllWorks() {
+    showWorks(allWorks);
+}
+
+// 4. الفلترة حسب الفئة
+function filterWorksByCategory(categoryId) {
+    const filtered = allWorks.filter(work => work.categoryId === categoryId);
+    showWorks(filtered);
+}
+
+// 5. إنشاء الفلاتر
+async function getCat() {
+    const categories = await getCategories();
+
+    const filtersDiv = document.createElement("div");
+    filtersDiv.classList.add("filters");
+
+    const allBtn = document.createElement("button");
+    allBtn.textContent = "Tous";
+    allBtn.classList.add("filter-btn");
+    allBtn.dataset.categoryId = 0;
+    allBtn.addEventListener("click", showAllWorks);
+    filtersDiv.appendChild(allBtn);
+
+    categories.forEach(category => {
+        const categoryBtn = document.createElement("button");
+        categoryBtn.textContent = category.name;
+        categoryBtn.classList.add("filter-btn");
+        categoryBtn.dataset.categoryId = category.id;
+
+        categoryBtn.addEventListener("click", () => {
+            filterWorksByCategory(category.id);
+        });
+
+        filtersDiv.appendChild(categoryBtn);
+    });
+
+    document.querySelector("#filters").appendChild(filtersDiv);
+}
+getCat();
+
+// 6. التهيئة عند تحميل الصفحة
+async function initGallery() {
+    allWorks = await getworks();
+    showWorks(allWorks);
+}
+initGallery();
+
 /*************************************************************************/
 //لتسجيل الخروج بعد الدخول للموقع كمسؤول
   document.addEventListener("DOMContentLoaded", function () {
@@ -227,7 +203,7 @@ function renderWorkItem(work, container, showDelete = false) {
   if (showDelete) {
     const deleteBtn = document.createElement("button");
     deleteBtn.classList.add("delete-button");
-    deleteBtn.innerHTML = "🗑️";
+      deleteBtn.innerHTML = '<i class="fa-solid fa-trash-can" style="color: white;"></i>';
     deleteBtn.addEventListener("click", async () => {
       await deleteWork(work.id, figure, img.src);
     });
@@ -386,10 +362,18 @@ validateBtn.addEventListener("click", async function (e) {
       document.getElementById("title").value = "";
       document.getElementById("category").value = "";
 
-      alert("Image ajoutée avec succès !");
-    } else {
-      alert("Échec de l'ajout de l'image.");
-    }
+      const oldPreview = imagePlaceholder.querySelector("img");
+  if (oldPreview) oldPreview.remove();
+
+  // إعادة الأيقونة الأصلية
+  if (!imagePlaceholder.querySelector("i")) {
+    const newIcon = document.createElement("i");
+    newIcon.className = "fa-regular fa-image";
+    imagePlaceholder.insertBefore(newIcon, addPhotoBtn);
+  }
+
+  alert("Image ajoutée avec succès !");
+}
   } catch (error) {
     console.error("Erreur lors de l'envoi de l'image :", error);
   }
@@ -432,7 +416,6 @@ imageInput.addEventListener("change", () => {
     reader.readAsDataURL(file);
   }
 });
-
 
 //زر الرجوع الى المودال
 document.getElementById("show-gallery").addEventListener("click", function(event) {

@@ -394,18 +394,21 @@ addPhotoBtn.addEventListener("click", (e) => {
 //ذا تم اختيار صورة، اقرأها واعرضها، واحذف الأيقونةا*
 
 imageInput.addEventListener("change", () => {
-  const file = emageInput.files[0];
+  const file = imageInput.files[0];
 
   if (file) {
     const reader = new FileReader();
 
     reader.onload = function (e) {
+      // إزالة الأيقونة إذا كانت موجودة
+      const iconElement = imagePlaceholder.querySelector("i");
       if (iconElement) iconElement.remove();
 
-      //  نحذف أي صورة سابقة إن وُجدت
+      // إزالة أي صورة سابقة
       const oldPreview = imagePlaceholder.querySelector("img");
       if (oldPreview) oldPreview.remove();
 
+      // إنشاء صورة معاينة جديدة
       const imgPreview = document.createElement("img");
       imgPreview.src = e.target.result;
       imgPreview.classList.add("preview-image");
@@ -428,3 +431,70 @@ document.getElementById("show-gallery").addEventListener("click", function(event
   const galleryView = document.getElementById("gallery-view");
   galleryView.classList.remove("hidden")
 });
+
+//////// ضبط المعرض في حالة الضغط على الرجوع او الاغلاق او خارج المودال
+function resetUploadForm() {
+  const imageInput = document.getElementById("image");
+  const titleInput = document.getElementById("title");
+  const categorySelect = document.getElementById("category");
+  const imagePlaceholder = document.querySelector(".image-upload-placeholder");
+  const addPhotoBtn = document.getElementById("add-photo-btn");
+
+  // إعادة تعيين القيم
+  imageInput.value = "";
+  titleInput.value = "";
+  categorySelect.value = "";
+
+  // إزالة الصورة المعروضة (إن وجدت)
+  const oldPreview = imagePlaceholder.querySelector("img");
+  if (oldPreview) oldPreview.remove();
+
+  // إزالة الأيقونة (إن وجدت) أولًا (لتجنب تكرار)
+  const oldIcon = imagePlaceholder.querySelector("i");
+  if (oldIcon) oldIcon.remove();
+
+  // إعادة إضافة الأيقونة الأصلية فقط إذا لم تكن موجودة صورة أو أيقونة
+  if (!imagePlaceholder.querySelector("img") && !imagePlaceholder.querySelector("i")) {
+    const newIcon = document.createElement("i");
+    newIcon.className = "fa-regular fa-image";
+    imagePlaceholder.insertBefore(newIcon, addPhotoBtn);
+  }
+}
+
+/// دالة لكي يجبر المستخدم للرجوع للمودال الاول 
+function showGalleryView() {
+  document.getElementById("upload-view").classList.add("hidden");
+  document.getElementById("gallery-view").classList.remove("hidden");
+}
+
+/// زر الرجوع #show-gallery
+document.getElementById("show-gallery").addEventListener("click", function(event) {
+  event.preventDefault();
+  resetUploadForm();
+  showGalleryView(); 
+});
+
+
+/// زر إغلاق المودال
+document.getElementById("close-modale").addEventListener("click", () => {
+  resetUploadForm(); // إعادة تعيين النموذج
+  showGalleryView(); // الرجوع للصفحة الأولى
+  const modal = document.getElementById("modale");
+  modal.classList.remove("show-modale");
+  modal.classList.add("hidden");
+});
+
+
+
+// الضغط خارج المودال/
+const modal = document.getElementById("modale");
+
+modal.addEventListener("click", function (e) {
+  if (e.target === modal) {
+    resetUploadForm(); // إعادة تعيين النموذج
+    showGalleryView(); // الرجوع للصفحة الأولى
+    modal.classList.remove("show-modale");
+    modal.classList.add("hidden");
+  }
+});
+

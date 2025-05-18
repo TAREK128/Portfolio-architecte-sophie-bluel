@@ -498,3 +498,17 @@ modal.addEventListener("click", function (e) {
   }
 });
 
+///////////////////// الشريط
+ document.addEventListener("DOMContentLoaded", () => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      const adminBar = document.getElementById("admin-bar");
+      adminBar.classList.remove("hidden");
+
+      const modifierBtn = document.getElementById("modifier-btn");
+      modifierBtn.addEventListener("click", () => {
+        document.getElementById("modale").classList.add("show-modale");
+      });
+    }
+  });
